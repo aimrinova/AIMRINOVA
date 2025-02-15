@@ -138,6 +138,6 @@ For commercial use or licensing inquiries, **contact us**.
 ## **📩 Contact**
 💼 **Project Lead**: *Daniel Schubert*  
 📧 **Email**: *daschub496@gmail.com*  
-🌐 **Website**: *coming in the future*  
+🌐 **Website**: *coming in the future (aimrinova.github.io)*  
 
 ---
