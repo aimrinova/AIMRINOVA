@@ -1,31 +1,43 @@
-# AIMRINOVA: AI-Powered MRI Disease Detection
+# AIMRINOVA
 
-## Overview
-AIMRINOVA is an AI-powered system designed for on-premise deployment in hospitals and radiology centers to assist in MRI scan analysis. It leverages deep learning models to classify and detect diseases from MRI scans, ensuring privacy and security by processing data locally on hospital networks.
+### **📌 AIMRINOVA – AI-Powered MRI Scan Analysis**
+🚀 **Revolutionizing Medical Imaging with On-Premises AI for MRI Disease Detection**  
 
-## Features
-- **On-Premise Deployment**: Runs locally on NVIDIA Digits PC or similar hardware.
-- **Deep Learning-Based Detection**: Uses CNN-based models (ResNet, U-Net, EfficientNet) for accurate disease classification.
-- **DICOM Image Processing**: Converts and preprocesses MRI scans for analysis.
-- **Automated Diagnosis**: AI-based inference to highlight potential abnormalities.
-- **Security & Compliance**: HIPAA and GDPR-compliant data encryption and patient privacy.
+---
 
-## Project Structure
+## **📖 Overview**
+AIMRINOVA is an AI-powered MRI scan analysis system designed for hospitals and radiologists. It leverages deep learning techniques, particularly **Convolutional Neural Networks (CNNs)**, to assist in **detecting abnormalities in MRI scans** with high accuracy.  
+
+Unlike cloud-based solutions, AIMRINOVA runs **on-premises** using **Nvidia Project Digits or custom AI hardware**, ensuring **data privacy, HIPAA/GDPR compliance, and reduced processing costs**.
+
+---
+
+## **💡 Features**
+✔ **On-Premises AI Processing** – No cloud dependency, ensuring full patient data security.  
+✔ **Deep Learning for MRI Scans** – Uses CNN models trained on medical imaging datasets.  
+✔ **Customizable AI Models** – Supports model fine-tuning and continuous learning.  
+✔ **Fast & Automated Diagnosis** – Reduces radiologists’ workload by pre-screening scans.  
+✔ **Secure Data Handling** – Image processing is separated from patient data for added privacy.  
+✔ **Plug-and-Play Deployment** – Compatible with **Nvidia Digits, custom servers, and hospital PACS systems**.
+
+---
+
+## **📂 Project Structure**
 ```
-AIMRINOVA/          
-│── /data                          # MRI datasets (raw & processed)
+AIMRINOVA/
+│── data/                          # DICOM images & preprocessing scripts
 │   │── /raw_mri_scans             # Original DICOM/NIfTI scans
 │   │── /processed_mri_scans       # Preprocessed MRI images
 │   │── /segmentation_masks        # Ground truth masks for U-Net
 │   │── /predictions               # Model output (classified images, segmented heatmaps)
 │
-│── src/               # Code for training, evaluation, and inference
+│── src/                           # Code for training, evaluation, and inference
 │── /models                        # Trained AI models
 │   │── mri_model_v1.h5            # CNN model (initial version)
 │   │── mri_model_v2.h5            # Improved model
 │   │── unet_segmentation.h5       # U-Net segmentation model
 │
-│── /scripts
+│── /scripts/                  # Training, evaluation & deployment scripts
 │   │── preprocess_mri.py          # Preprocess MRI images (resize, normalize, denoise)
 │   │── train_cnn.py               # Train CNN model for classification
 │   │── train_unet.py              # Train U-Net model for segmentation
@@ -43,66 +55,89 @@ AIMRINOVA/
 │── /logs
 │   │── training_logs.txt          # Logs from model training
 │   │── inference_logs.txt         # Logs from model predictions
-│
-│── notebooks/         # Jupyter Notebooks for experimentation
-│── configs/           # Model and system configurations
-│── requirements.txt   # Dependencies
-│── setup_project.sh                # Project setup script (creates folders, installs dependencies)
-│── README.md                        # Project documentation
-│── .gitignore   
+│── ui/                       # Web-based interface for radiologists  
+│── docs/                     # Documentation & regulatory compliance  
+│── tests/                    # Unit & performance tests  
+│── config/                   # Configuration & settings  
+│── LICENSE                   # Proprietary License  
+│── README.md                 # Project documentation  
 ```
 
-## Installation
-### **1. Clone the Repository**
+---
+
+## **⚙️ Tech Stack**
+🔹 **AI Frameworks**: TensorFlow, PyTorch, MONAI (Medical AI Toolkit)  
+🔹 **Data Format**: DICOM (Digital Imaging and Communications in Medicine)  
+🔹 **Processing Hardware**: Nvidia **Project Digits** or **Custom AI Server**  
+🔹 **Networking & Security**: Encrypted data processing for **GDPR/HIPAA compliance**  
+🔹 **Hospital Integration**: PACS (Picture Archiving and Communication System), HL7  
+
+---
+
+## **🛠️ Installation**
+### **1️⃣ Setup the Environment**
 ```bash
 git clone https://github.com/yourusername/AIMRINOVA.git
 cd AIMRINOVA
-```
-
-### **2. Install Dependencies**
-```bash
 pip install -r requirements.txt
 ```
-
-### **3. Run Preprocessing Script**
+### **2️⃣ Prepare the Data**
+Ensure your MRI scans are in **DICOM format** and placed inside `data/`. Run preprocessing:
 ```bash
-python src/preprocessing.py --input data/raw --output data/processed
+python scripts/preprocess.py --input data/ --output processed_data/
 ```
 
-### **4. Train the AI Model**
+### **3️⃣ Train the AI Model**
 ```bash
-python src/train.py --config configs/model_config.yaml
+python scripts/train.py --config config/train_config.yaml
 ```
 
-### **5. Evaluate the Model**
+### **4️⃣ Deploy & Run Inference**
 ```bash
-python src/evaluate.py --model models/best_model.pth --test data/test
+python src/inference.py --image data/sample_mri.dcm
 ```
 
-### **6. Run Inference on New MRI Scans**
-```bash
-python src/infer.py --input scans/mri_sample.dcm
-```
+---
 
-## Deployment
-- **On-Premise**: Deployed as a local API using Flask/FastAPI.
-- **Hospital Integration**: Compatible with PACS/DICOM systems.
-- **Security**: Implements encryption to separate patient data from images.
+## **🔬 Model Training & Evaluation**
+### **🧠 Training CNN Model**
+AIMRINOVA uses **Convolutional Neural Networks (CNNs)** trained on MRI scan datasets:
+- **Pretrained Networks**: EfficientNet, ResNet, UNet for segmentation.
+- **Optimization**: Uses **cross-validation**, **hyperparameter tuning**, and **data augmentation**.
+- **Evaluation Metrics**: Accuracy, Sensitivity, Specificity, Dice Score, F1-score.
 
-## Future Enhancements
-- Support for 3D MRI scans.
-- Real-time analysis using NVIDIA Triton Inference Server.
-- Expansion to other imaging modalities (CT, X-ray).
+### **📊 Continuous Improvement**
+- Uses **active learning** to enhance detection accuracy.
+- Supports **federated learning** (optional) for multi-hospital AI model improvements.
 
-## Contributing
-1. Fork the repository.
-2. Create a feature branch (`git checkout -b feature-name`).
-3. Commit your changes (`git commit -m "Added new feature"`).
-4. Push to the branch (`git push origin feature-name`).
-5. Create a Pull Request.
+---
 
-## License
-Proprietary License
+## **🔐 Security & Compliance**
+✔ **Patient Data Encryption** – MRI scans are processed **without personal data exposure**.  
+✔ **Compliant with GDPR & HIPAA** – No cloud uploads; all AI processing is local.  
+✔ **Data Integrity & Audit Logs** – Ensures all AI results can be reviewed by medical professionals.  
 
-## Contact
-For inquiries, please reach out via email: `daschub496@gmail.com`
+---
+
+## **🚀 Roadmap**
+- [x] Build AI model for MRI scan classification  
+- [x] Develop hospital integration (DICOM, PACS, HL7)  
+- [ ] Implement user-friendly **radiologist UI**  
+- [ ] Validate with real hospital test cases  
+- [ ] Optimize AI model for **real-time inference**  
+
+---
+
+## **📜 License**
+🔒 **Proprietary License** – AIMRINOVA is **not open-source**. All rights reserved.  
+
+For commercial use or licensing inquiries, **contact us**.  
+
+---
+
+## **📩 Contact**
+💼 **Project Lead**: *Daniel Schubert*  
+📧 **Email**: *daschub496@gmail.com*  
+🌐 **Website**: *coming in the future*  
+
+---
