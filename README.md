@@ -12,16 +12,44 @@ AIMRINOVA is an AI-powered system designed for on-premise deployment in hospital
 
 ## Project Structure
 ```
-AIMRINOVA/
-│── data/              # MRI datasets (raw & processed)
-│── models/            # Trained AI models
+AIMRINOVA/          
+│── /data                          # MRI datasets (raw & processed)
+│   │── /raw_mri_scans             # Original DICOM/NIfTI scans
+│   │── /processed_mri_scans       # Preprocessed MRI images
+│   │── /segmentation_masks        # Ground truth masks for U-Net
+│   │── /predictions               # Model output (classified images, segmented heatmaps)
+│
 │── src/               # Code for training, evaluation, and inference
-│── deployment/        # API & security implementations
+│── /models                        # Trained AI models
+│   │── mri_model_v1.h5            # CNN model (initial version)
+│   │── mri_model_v2.h5            # Improved model
+│   │── unet_segmentation.h5       # U-Net segmentation model
+│
+│── /scripts
+│   │── preprocess_mri.py          # Preprocess MRI images (resize, normalize, denoise)
+│   │── train_cnn.py               # Train CNN model for classification
+│   │── train_unet.py              # Train U-Net model for segmentation
+│   │── predict_mri.py             # Load trained models and predict injuries
+│   │── grad_cam.py                # Generate heatmaps for explainability
+│   │── evaluate_model.py          # Compute accuracy, precision, recall, confusion matrix
+│
+│── /deployment                    # API & security implementations
+│   │── flask_api.py               # REST API for model inference (for local hospital use)
+│   │── gui_app.py                 # Optional: Local GUI for MRI uploads
+│   │── /configs
+│   │   │── model_config.json      # Configuration for loading models
+│   │   │── requirements.txt       # Dependency list
+│
+│── /logs
+│   │── training_logs.txt          # Logs from model training
+│   │── inference_logs.txt         # Logs from model predictions
+│
 │── notebooks/         # Jupyter Notebooks for experimentation
 │── configs/           # Model and system configurations
-│── logs/              # Training and error logs
 │── requirements.txt   # Dependencies
-│── README.md          # Project documentation
+│── setup_project.sh                # Project setup script (creates folders, installs dependencies)
+│── README.md                        # Project documentation
+│── .gitignore   
 ```
 
 ## Installation
@@ -74,7 +102,7 @@ python src/infer.py --input scans/mri_sample.dcm
 5. Create a Pull Request.
 
 ## License
-MIT License
+Proprietary License
 
 ## Contact
-For inquiries, please reach out via email: `your_email@example.com`
+For inquiries, please reach out via email: `daschub496@gmail.com`
