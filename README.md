@@ -25,43 +25,85 @@ Unlike cloud-based solutions, AIMRINOVA runs **on-premises** using **Nvidia Proj
 ## **📂 Project Structure**
 ```
 AIMRINOVA/
-│── data/                          # DICOM images & preprocessing scripts
-│   │── /raw_mri_scans             # Original DICOM/NIfTI scans
-│   │── /processed_mri_scans       # Preprocessed MRI images
-│   │── /segmentation_masks        # Ground truth masks for U-Net
-│   │── /predictions               # Model output (classified images, segmented heatmaps)
+│── data/                          # MRI data storage
+│   │── brain_tumor/               # Brain tumor MRI dataset
+│   │   │── raw_mri_scans/         # Original DICOM/NIfTI scans
+│   │   │── processed_mri_scans/   # Preprocessed images
+│   │   │── segmentation_masks/    # Ground truth segmentation labels
+│   │   │── predictions/           # AI model predictions (heatmaps, classifications)
+│   │── spinal_injury/             # Spinal MRI dataset
+│   │── dental_mri/                # Dental MRI dataset for dentists
+│   │── other_diseases/            # Future expansions
 │
-│── src/                           # Code for training, evaluation, and inference
-│── /models                        # Trained AI models
-│   │── mri_model_v1.h5            # CNN model (initial version)
-│   │── mri_model_v2.h5            # Improved model
-│   │── unet_segmentation.h5       # U-Net segmentation model
+│── models/                        # Trained AI models per disease
+│   │── brain_tumor/
+│   │   │── cnn_brain_tumor.engine  # TensorRT-optimized classification model
+│   │   │── unet_brain_tumor.engine # Segmentation model
+│   │── spinal_injury/
+│   │── dental_mri/
+│   │── other_diseases/
 │
-│── /scripts/                  # Training, evaluation & deployment scripts
-│   │── preprocess_mri.py          # Preprocess MRI images (resize, normalize, denoise)
-│   │── train_cnn.py               # Train CNN model for classification
-│   │── train_unet.py              # Train U-Net model for segmentation
-│   │── predict_mri.py             # Load trained models and predict injuries
-│   │── grad_cam.py                # Generate heatmaps for explainability
-│   │── evaluate_model.py          # Compute accuracy, precision, recall, confusion matrix
+│── src/                           # Core AI code for training, inference, and evaluation
+│   │── training/                   # Disease-specific training scripts
+│   │   │── train_brain_tumor.py
+│   │   │── train_spinal_injury.py
+│   │   │── train_dental.py
+│   │   │── convert_tensorrt.py     # Converts trained models to TensorRT format
+│   │── inference/                  # Inference & model predictions
+│   │   │── predict_mri.py
+│   │   │── grad_cam.py             # Explainability (heatmaps)
 │
-│── /deployment                    # API & security implementations
-│   │── flask_api.py               # REST API for model inference (for local hospital use)
-│   │── gui_app.py                 # Optional: Local GUI for MRI uploads
-│   │── /configs
-│   │   │── model_config.json      # Configuration for loading models
-│   │   │── requirements.txt       # Dependency list
+│── scripts/                        # Utility scripts
+│   │── preprocess_mri.py           # Resize, normalize, denoise MRI images
+│   │── evaluate_model.py           # Accuracy, precision, recall, confusion matrix
 │
-│── /logs
-│   │── training_logs.txt          # Logs from model training
-│   │── inference_logs.txt         # Logs from model predictions
-│── ui/                       # Web-based interface for radiologists  
-│── docs/                     # Documentation & regulatory compliance  
-│── tests/                    # Unit & performance tests  
-│── config/                   # Configuration & settings  
-│── LICENSE                   # Proprietary License  
-│── README.md                 # Project documentation  
+│── deployment/                     # API & GUI for hospitals
+│   │── api/                         # Model inference API
+│   │   │── django_api/              # Django-based REST API (for hospitals)
+│   │   │── flask_api.py             # (Alternative) Flask-based API
+│   │── gui/                         # Local GUI for MRI uploads (if needed)
+│   │── docker/                      # Dockerized deployment setup
+│   │   │── Dockerfile
+│   │   │── tensorrt_runtime.sh
+│
+│── config/                          # Model configuration files
+│   │── diseases/
+│   │   │── brain_tumor.json
+│   │   │── spinal_injury.json
+│   │   │── dental_mri.json
+│
+│── logs/                            # Training & inference logs
+│   │── training_logs.txt
+│   │── inference_logs.txt
+│   │── dashboard_logs/              # Logs for the web-based dashboard
+│
+│── dashboard/                       # Django-based training dashboard
+│   │── aimrinova_dashboard/         # Django project root
+│   │   │── manage.py                # Django project manager
+│   │   │── dashboard_app/           # Django app for dashboard
+│   │   │   │── models.py            # Training logs, user roles
+│   │   │   │── views.py             # API endpoints for real-time updates
+│   │   │   │── urls.py              # URL routing
+│   │   │   │── consumers.py         # WebSockets for real-time updates
+│   │   │   │── templates/           # Web UI (HTML)
+│   │   │   │── static/              # CSS, JS, images
+│   │   │── users/                   # User authentication & role management
+│   │   │   │── models.py            # User roles (radiologists, IT admins)
+│   │   │   │── views.py             # Login, registration
+│
+│── ui/                              # Web interface for radiologists
+│── docs/                            # Documentation & compliance  
+│── tests/                           # Unit & performance tests  
+│── LICENSE                          # Proprietary License  
+│── README.md                        # Project documentation  
 ```
+
+---
+### **Features**
+✅ **Django Dashboard** 📊 – A dedicated app for monitoring training progress.  
+✅ **Multi-User Support** 👤 – Role-based access for radiologists & IT admins.  
+✅ **WebSockets** ⚡ – Real-time updates without needing manual refresh.  
+✅ **Ethernet/LAN Support** 🌐 – Hospitals can use the dashboard **locally**.  
 
 ---
 
